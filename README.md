@@ -17,6 +17,21 @@ depend on any existing random-feature codebase.
 
 ---
 
+## Measured simulations (this checkout)
+
+Re-run anytime with the scripts under `scripts/`. Latest laptop run:
+
+| Experiment | Headline |
+|---|---|
+| Wall-time vs exact OVK-KRR (`spectral`, quick) | **~27.7× median** faster at matched excess risk (range ~25–126×); exact still wins on risk at matched \(n\) |
+| Wall-time (`poisson` NTK, quick) | **~3.6× median** at matched risk (range ~1.6–44×) — speedup shrinks when feature dim is large |
+| Feature threshold (Fig.1 / App. A.3, quick) | \(M\sim\sqrt{n}\,p\) hit the plateau in **7/8** cases; worst excess over plateau **+8.7%** |
+
+Artifacts: `results/walltime_*.json`, `results/feature_threshold*.csv`, `results/feature_threshold_heatmap.png`.
+
+See also [docs/WHY_THIS_PAIR.md](docs/WHY_THIS_PAIR.md) for how this pairs with SpecInv — and why neither repo is a Nature breakthrough by itself.
+
+
 ## What the paper says
 
 The setting is regression from an input space $\mathcal{U}$ into a separable Hilbert space

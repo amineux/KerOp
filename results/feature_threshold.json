@@ -1,0 +1,792 @@
+{
+  "provenance": {
+    "kerop_version": "0.1.0",
+    "paper": "arXiv:2603.00971",
+    "timestamp_utc": "2026-09-03T09:57:14+00:00",
+    "git_commit": "71b67ebd0bfcb4a2ea2b682cd4ec0cd6c51797c2",
+    "python": "3.13.5",
+    "numpy": "2.5.2",
+    "platform": "Linux-6.12.94+-x86_64-with-glibc2.41",
+    "processor": "",
+    "cpu_count": 8,
+    "blas": {
+      "name": "scipy-openblas",
+      "version": "0.3.34.0.0"
+    }
+  },
+  "experiment": "feature_threshold_appendix_a3",
+  "description": "Test error of kernel gradient descent on the real-valued NTK over the number of random features and iterations, checking that M of order sqrt(n) * p suffices to reach the large-M plateau.",
+  "settings": {
+    "cases": [
+      [
+        1,
+        500
+      ],
+      [
+        1,
+        1000
+      ]
+    ],
+    "feature_multipliers": [
+      0.0625,
+      0.125,
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ],
+    "iteration_grid": [
+      8,
+      16,
+      32,
+      64
+    ],
+    "repeats": 2,
+    "n_test": 500,
+    "noise_std": 0.2,
+    "step": 0.5,
+    "tolerance": 0.05,
+    "target": "drawn from the NTK RKHS, unit L2 norm (well-specified, r = 1/2)",
+    "d14_design": "Gaussian; SUSY not retrievable in this environment"
+  },
+  "grid": [
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 4,
+      "feature_multiplier": 0.05962847939999438,
+      "iterations": 8,
+      "mean_test_error": 7.985677807643638
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 4,
+      "feature_multiplier": 0.05962847939999438,
+      "iterations": 16,
+      "mean_test_error": 5.816247061031012
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 4,
+      "feature_multiplier": 0.05962847939999438,
+      "iterations": 32,
+      "mean_test_error": 5.415112660856793
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 4,
+      "feature_multiplier": 0.05962847939999438,
+      "iterations": 64,
+      "mean_test_error": 5.247656923631784
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 8,
+      "feature_multiplier": 0.11925695879998877,
+      "iterations": 8,
+      "mean_test_error": 6.270180548562466
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 8,
+      "feature_multiplier": 0.11925695879998877,
+      "iterations": 16,
+      "mean_test_error": 5.278172127298304
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 8,
+      "feature_multiplier": 0.11925695879998877,
+      "iterations": 32,
+      "mean_test_error": 4.572969118329698
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 8,
+      "feature_multiplier": 0.11925695879998877,
+      "iterations": 64,
+      "mean_test_error": 4.097136745844617
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 17,
+      "feature_multiplier": 0.2534210374499761,
+      "iterations": 8,
+      "mean_test_error": 8.083470418986948
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 17,
+      "feature_multiplier": 0.2534210374499761,
+      "iterations": 16,
+      "mean_test_error": 6.5977040617995435
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 17,
+      "feature_multiplier": 0.2534210374499761,
+      "iterations": 32,
+      "mean_test_error": 5.445129946996471
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 17,
+      "feature_multiplier": 0.2534210374499761,
+      "iterations": 64,
+      "mean_test_error": 4.501199425459278
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 34,
+      "feature_multiplier": 0.5068420748999523,
+      "iterations": 8,
+      "mean_test_error": 7.154627517721014
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 34,
+      "feature_multiplier": 0.5068420748999523,
+      "iterations": 16,
+      "mean_test_error": 5.924012709706231
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 34,
+      "feature_multiplier": 0.5068420748999523,
+      "iterations": 32,
+      "mean_test_error": 4.933876925331524
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 34,
+      "feature_multiplier": 0.5068420748999523,
+      "iterations": 64,
+      "mean_test_error": 4.258250958461923
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 67,
+      "feature_multiplier": 0.9987770299499059,
+      "iterations": 8,
+      "mean_test_error": 7.127199086883804
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 67,
+      "feature_multiplier": 0.9987770299499059,
+      "iterations": 16,
+      "mean_test_error": 6.1257905679730795
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 67,
+      "feature_multiplier": 0.9987770299499059,
+      "iterations": 32,
+      "mean_test_error": 5.217694503658718
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 67,
+      "feature_multiplier": 0.9987770299499059,
+      "iterations": 64,
+      "mean_test_error": 4.331319666042931
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 134,
+      "feature_multiplier": 1.9975540598998118,
+      "iterations": 8,
+      "mean_test_error": 6.2152023089239
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 134,
+      "feature_multiplier": 1.9975540598998118,
+      "iterations": 16,
+      "mean_test_error": 5.2083307395158425
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 134,
+      "feature_multiplier": 1.9975540598998118,
+      "iterations": 32,
+      "mean_test_error": 4.52790870087146
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 134,
+      "feature_multiplier": 1.9975540598998118,
+      "iterations": 64,
+      "mean_test_error": 4.0267505457943695
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 268,
+      "feature_multiplier": 3.9951081197996237,
+      "iterations": 8,
+      "mean_test_error": 7.293189437712508
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 268,
+      "feature_multiplier": 3.9951081197996237,
+      "iterations": 16,
+      "mean_test_error": 6.090494783308591
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 268,
+      "feature_multiplier": 3.9951081197996237,
+      "iterations": 32,
+      "mean_test_error": 5.084456836971354
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "n_features": 268,
+      "feature_multiplier": 3.9951081197996237,
+      "iterations": 64,
+      "mean_test_error": 4.2534550341721715
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 6,
+      "feature_multiplier": 0.0632455532033676,
+      "iterations": 8,
+      "mean_test_error": 5.690849965097804
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 6,
+      "feature_multiplier": 0.0632455532033676,
+      "iterations": 16,
+      "mean_test_error": 3.8911237147649365
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 6,
+      "feature_multiplier": 0.0632455532033676,
+      "iterations": 32,
+      "mean_test_error": 3.5555557987809365
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 6,
+      "feature_multiplier": 0.0632455532033676,
+      "iterations": 64,
+      "mean_test_error": 3.3031583007645504
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 12,
+      "feature_multiplier": 0.1264911064067352,
+      "iterations": 8,
+      "mean_test_error": 5.294491856790559
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 12,
+      "feature_multiplier": 0.1264911064067352,
+      "iterations": 16,
+      "mean_test_error": 4.127936340875
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 12,
+      "feature_multiplier": 0.1264911064067352,
+      "iterations": 32,
+      "mean_test_error": 3.464068503643917
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 12,
+      "feature_multiplier": 0.1264911064067352,
+      "iterations": 64,
+      "mean_test_error": 2.9465523548188255
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 24,
+      "feature_multiplier": 0.2529822128134704,
+      "iterations": 8,
+      "mean_test_error": 5.04440420338742
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 24,
+      "feature_multiplier": 0.2529822128134704,
+      "iterations": 16,
+      "mean_test_error": 3.422780735628353
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 24,
+      "feature_multiplier": 0.2529822128134704,
+      "iterations": 32,
+      "mean_test_error": 2.886702824789604
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 24,
+      "feature_multiplier": 0.2529822128134704,
+      "iterations": 64,
+      "mean_test_error": 2.580609630020758
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 47,
+      "feature_multiplier": 0.49542350009304614,
+      "iterations": 8,
+      "mean_test_error": 5.698125936059679
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 47,
+      "feature_multiplier": 0.49542350009304614,
+      "iterations": 16,
+      "mean_test_error": 3.971661593932203
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 47,
+      "feature_multiplier": 0.49542350009304614,
+      "iterations": 32,
+      "mean_test_error": 3.2195575623401202
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 47,
+      "feature_multiplier": 0.49542350009304614,
+      "iterations": 64,
+      "mean_test_error": 2.7661122421179227
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 95,
+      "feature_multiplier": 1.001387925719987,
+      "iterations": 8,
+      "mean_test_error": 5.408330315239171
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 95,
+      "feature_multiplier": 1.001387925719987,
+      "iterations": 16,
+      "mean_test_error": 3.442323261106445
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 95,
+      "feature_multiplier": 1.001387925719987,
+      "iterations": 32,
+      "mean_test_error": 2.9156990931654203
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 95,
+      "feature_multiplier": 1.001387925719987,
+      "iterations": 64,
+      "mean_test_error": 2.629320783148509
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 190,
+      "feature_multiplier": 2.002775851439974,
+      "iterations": 8,
+      "mean_test_error": 5.109042329189775
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 190,
+      "feature_multiplier": 2.002775851439974,
+      "iterations": 16,
+      "mean_test_error": 3.6267483626124344
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 190,
+      "feature_multiplier": 2.002775851439974,
+      "iterations": 32,
+      "mean_test_error": 3.08763968670722
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 190,
+      "feature_multiplier": 2.002775851439974,
+      "iterations": 64,
+      "mean_test_error": 2.743467787107389
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 379,
+      "feature_multiplier": 3.9950107773460526,
+      "iterations": 8,
+      "mean_test_error": 4.973709478895653
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 379,
+      "feature_multiplier": 3.9950107773460526,
+      "iterations": 16,
+      "mean_test_error": 3.557740229256453
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 379,
+      "feature_multiplier": 3.9950107773460526,
+      "iterations": 32,
+      "mean_test_error": 3.045312708806337
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "n_features": 379,
+      "feature_multiplier": 3.9950107773460526,
+      "iterations": 64,
+      "mean_test_error": 2.7135808512065323
+    }
+  ],
+  "sufficiency": [
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 8,
+      "features_at_unit_multiplier": 67,
+      "features_at_plateau": 268,
+      "error_at_unit_multiplier": 7.127199086883804,
+      "plateau_error": 7.293189437712508,
+      "excess_over_plateau": -0.02275963791237623,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 16,
+      "features_at_unit_multiplier": 67,
+      "features_at_plateau": 268,
+      "error_at_unit_multiplier": 6.1257905679730795,
+      "plateau_error": 6.090494783308591,
+      "excess_over_plateau": 0.005795224512993524,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 32,
+      "features_at_unit_multiplier": 67,
+      "features_at_plateau": 268,
+      "error_at_unit_multiplier": 5.217694503658718,
+      "plateau_error": 5.084456836971354,
+      "excess_over_plateau": 0.026204896798126764,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 64,
+      "features_at_unit_multiplier": 67,
+      "features_at_plateau": 268,
+      "error_at_unit_multiplier": 4.331319666042931,
+      "plateau_error": 4.2534550341721715,
+      "excess_over_plateau": 0.018306207834618338,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 8,
+      "features_at_unit_multiplier": 95,
+      "features_at_plateau": 379,
+      "error_at_unit_multiplier": 5.408330315239171,
+      "plateau_error": 4.973709478895653,
+      "excess_over_plateau": 0.08738363955267037,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": false
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 16,
+      "features_at_unit_multiplier": 95,
+      "features_at_plateau": 379,
+      "error_at_unit_multiplier": 3.442323261106445,
+      "plateau_error": 3.557740229256453,
+      "excess_over_plateau": -0.03244108920625988,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 32,
+      "features_at_unit_multiplier": 95,
+      "features_at_plateau": 379,
+      "error_at_unit_multiplier": 2.9156990931654203,
+      "plateau_error": 3.045312708806337,
+      "excess_over_plateau": -0.042561676922735825,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 64,
+      "features_at_unit_multiplier": 95,
+      "features_at_plateau": 379,
+      "error_at_unit_multiplier": 2.629320783148509,
+      "plateau_error": 2.7135808512065323,
+      "excess_over_plateau": -0.03105124655510405,
+      "tolerance": 0.05,
+      "sqrt_n_p_suffices": true
+    }
+  ],
+  "thresholds": [
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 8,
+      "baseline_error": 22.057701763881354,
+      "plateau_error": 7.293189437712508,
+      "threshold_features": 8,
+      "threshold_multiplier": 0.11925695879998877,
+      "threshold_over_sqrt_n": 0.35777087639996635,
+      "threshold_features_interpolated": 4.510628510473799,
+      "threshold_multiplier_interpolated": 0.06724047980445357
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 16,
+      "baseline_error": 22.057701763881354,
+      "plateau_error": 6.090494783308591,
+      "threshold_features": 4,
+      "threshold_multiplier": 0.05962847939999438,
+      "threshold_over_sqrt_n": 0.17888543819998318,
+      "threshold_features_interpolated": 4.0,
+      "threshold_multiplier_interpolated": 0.05962847939999438
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 32,
+      "baseline_error": 22.057701763881354,
+      "plateau_error": 5.084456836971354,
+      "threshold_features": 8,
+      "threshold_multiplier": 0.11925695879998877,
+      "threshold_over_sqrt_n": 0.35777087639996635,
+      "threshold_features_interpolated": 4.240101682016815,
+      "threshold_multiplier_interpolated": 0.06320770395000529
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 500,
+      "iterations": 64,
+      "baseline_error": 22.057701763881354,
+      "plateau_error": 4.2534550341721715,
+      "threshold_features": 8,
+      "threshold_multiplier": 0.11925695879998877,
+      "threshold_over_sqrt_n": 0.35777087639996635,
+      "threshold_features_interpolated": 6.2835193548386306,
+      "threshold_multiplier_interpolated": 0.09366917610236532
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 8,
+      "baseline_error": 22.555667778873563,
+      "plateau_error": 4.973709478895653,
+      "threshold_features": 24,
+      "threshold_multiplier": 0.2529822128134704,
+      "threshold_over_sqrt_n": 0.7589466384404111,
+      "threshold_features_interpolated": 14.604278212778729,
+      "threshold_multiplier_interpolated": 0.15394260911717988
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 16,
+      "baseline_error": 22.555667778873563,
+      "plateau_error": 3.557740229256453,
+      "threshold_features": 24,
+      "threshold_multiplier": 0.2529822128134704,
+      "threshold_over_sqrt_n": 0.7589466384404111,
+      "threshold_features_interpolated": 17.36437587883829,
+      "threshold_multiplier_interpolated": 0.18303659308138998
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 32,
+      "baseline_error": 22.555667778873563,
+      "plateau_error": 3.045312708806337,
+      "threshold_features": 24,
+      "threshold_multiplier": 0.2529822128134704,
+      "threshold_over_sqrt_n": 0.7589466384404111,
+      "threshold_features_interpolated": 16.268445930715437,
+      "threshold_multiplier_interpolated": 0.17148447710786202
+    },
+    {
+      "input_dim": 1,
+      "n_summands": 3,
+      "n": 1000,
+      "iterations": 64,
+      "baseline_error": 22.555667778873563,
+      "plateau_error": 2.7135808512065323,
+      "threshold_features": 24,
+      "threshold_multiplier": 0.2529822128134704,
+      "threshold_over_sqrt_n": 0.7589466384404111,
+      "threshold_features_interpolated": 14.302146103422421,
+      "threshold_multiplier_interpolated": 0.15075785705105654
+    }
+  ],
+  "scaling": {
+    "per_dimension": [
+      {
+        "input_dim": 1,
+        "n": [
+          500,
+          1000
+        ],
+        "median_threshold": [
+          8.0,
+          24.0
+        ]
+      }
+    ],
+    "dimension_ratio": []
+  },
+  "verdict": {
+    "cases_tested": 8,
+    "cases_where_sqrt_n_p_suffices": 7,
+    "worst_excess_over_plateau": 0.08738363955267037
+  }
+}

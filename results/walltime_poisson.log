@@ -1,0 +1,18 @@
+[walltime] task=poisson(n_x=12)  p=9  d_v=12
+           matched sample size (exact wins on risk, as expected):
+             n=150   exact risk=0.00541 in   1.74s (dim   1800) | RF risk=0.00649 in  2.817s (dim   1980)
+             n=300   exact risk=0.00424 in   6.39s (dim   3600) | RF risk=0.00527 in  1.473s (dim   2808)
+             n=600   exact risk=0.00355 in  13.54s (dim   7200) | RF risk=0.00437 in  2.982s (dim   3969)
+           matched excess risk (each method picks its own n):
+             target=0.00437  exact: n=300     6.39s  |  RF: n=600   M=441    2.982s  ->    2.1x faster,   0.3x less memory
+             target=0.00603  exact: n=150     1.74s  |  RF: n=600   M=220    1.092s  ->    1.6x faster,   0.2x less memory
+             target=0.00834  exact: n=150     1.74s  |  RF: n=150   M=55     0.490s  ->    3.6x faster,   2.9x less memory
+             target=0.01152  exact: n=150     1.74s  |  RF: n=150   M=55     0.490s  ->    3.6x faster,   2.9x less memory
+             target=0.01591  exact: n=150     1.19s  |  RF: n=150   M=55     0.027s  ->   44.2x faster,   2.9x less memory
+           median speed-up at matched risk: 3.6x
+
+wrote results/walltime_poisson.json
+wrote results/walltime_poisson_fits.csv
+wrote results/walltime_poisson_matched_sample_size.csv
+wrote results/walltime_poisson_matched_risk.csv
+median speed-up at matched excess risk: 3.6x (range 1.6x-44.2x over 5 target levels)

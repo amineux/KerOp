@@ -1,0 +1,18 @@
+[walltime] task=spectral(r=0.5,b=0.5)  p=1  d_v=6
+           matched sample size (exact wins on risk, as expected):
+             n=150   exact risk=0.02435 in   0.14s (dim    900) | RF risk=0.07769 in  0.001s (dim     12)
+             n=300   exact risk=0.02102 in   0.19s (dim   1800) | RF risk=0.07085 in  0.003s (dim     35)
+             n=600   exact risk=0.01802 in   0.46s (dim   3600) | RF risk=0.04686 in  0.006s (dim     49)
+           matched excess risk (each method picks its own n):
+             target=0.04686  exact: n=150     0.14s  |  RF: n=600   M=49     0.006s  ->   24.7x faster,   4.5x less memory
+             target=0.05572  exact: n=150     0.14s  |  RF: n=600   M=49     0.005s  ->   27.7x faster,   4.5x less memory
+             target=0.06626  exact: n=150     0.14s  |  RF: n=600   M=49     0.005s  ->   27.7x faster,   4.5x less memory
+             target=0.07880  exact: n=150     0.14s  |  RF: n=150   M=12     0.001s  ->  126.0x faster,  74.0x less memory
+             target=0.09371  exact: n=150     0.14s  |  RF: n=150   M=12     0.001s  ->  126.0x faster,  74.0x less memory
+           median speed-up at matched risk: 27.7x
+
+wrote results/walltime_spectral.json
+wrote results/walltime_spectral_fits.csv
+wrote results/walltime_spectral_matched_sample_size.csv
+wrote results/walltime_spectral_matched_risk.csv
+median speed-up at matched excess risk: 27.7x (range 24.7x-126.0x over 5 target levels)

@@ -1,0 +1,9 @@
+[features] d=1   p=3   n=500    sqrt(n)p=     67  error at M=sqrt(n)p exceeds plateau by  +2.6% (worst over T); 4/4 within 5%; threshold at 0.119 x sqrt(n)p
+[features] d=1   p=3   n=1000   sqrt(n)p=     95  error at M=sqrt(n)p exceeds plateau by  +8.7% (worst over T); 3/4 within 5%; threshold at 0.253 x sqrt(n)p
+
+wrote results/feature_threshold.json
+wrote results/feature_threshold_grid.csv
+wrote results/feature_threshold_sufficiency.csv
+wrote results/feature_threshold_locations.csv
+wrote results/feature_threshold_heatmap.png
+M = sqrt(n) p reached the plateau in 7/8 cases; worst excess over plateau +8.7%
