@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kerop"
+version = "0.1.0"
+description = "Random features for operator-valued kernels with spectral filtering: a reference implementation of Nguyen & Mucke (AISTATS 2026), arXiv:2603.00971"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "KerOp contributors" }]
+keywords = [
+    "operator-learning",
+    "random-features",
+    "vector-valued-kernels",
+    "spectral-filtering",
+    "neural-operators",
+    "scientific-machine-learning",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+]
+
+[project.optional-dependencies]
+plots = ["matplotlib>=3.6"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "matplotlib>=3.6",
+    "ruff>=0.4",
+    "mypy>=1.6",
+]
+
+[project.scripts]
+kerop = "kerop.cli:main"
+
+[project.urls]
+Paper = "https://arxiv.org/abs/2603.00971"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+kerop = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+    "slow: marks tests that take more than a few seconds",
+]
+filterwarnings = ["error::RuntimeWarning"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests", "scripts"]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "NPY", "RUF"]
+ignore = ["B008"]
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src/kerop"]
+ignore_missing_imports = true
+warn_unused_ignores = false
+disallow_untyped_defs = true
