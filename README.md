@@ -134,6 +134,7 @@ Other entry points:
 kerop demo poisson --filter landweber      # gradient descent with early stopping
 kerop filters                              # measured constants and qualification of each family
 kerop theory --r 0.5 --b 1.0 --n 10000     # what Theorem 3.4 prescribes
+kerop export-filter-contract               # forward spectrum for SpecInv (docs/FILTER_CONTRACT.md)
 ```
 
 In Python:
@@ -207,6 +208,7 @@ holds the output of the run described in `results/summary.json`.
 | `kerop.theory` | Theorem 3.4 and Corollary 3.5 as executable prescriptions: $\lambda_n$, $M_n$, iteration counts, $n_0$, qualification requirements. |
 | `kerop.data` | A synthetic instance with prescribed $(r,b)$, and the Poisson and Darcy solution operators. |
 | `kerop.experiments` | The four experiment drivers. |
+| `kerop.filter_contract` | Versioned npz/JSON export of the forward spectrum SpecInv loads. |
 
 The two estimators share the filter implementations verbatim, so a comparison between them
 isolates the effect of the random feature approximation and nothing else.

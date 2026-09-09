@@ -16,6 +16,10 @@ Subcommands
 
 ``kerop info``
     Print the version and the citation.
+
+``kerop export-filter-contract``
+    Write the versioned forward-spectrum artifact documented in
+    ``docs/FILTER_CONTRACT.md``.
 """
 
 from __future__ import annotations
@@ -210,6 +214,27 @@ def _eligible(name: str, r: float) -> bool:
     return bool(instance.qualification >= max(r, 1.0))
 
 
+def _export_filter_contract(args: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from kerop.filter_contract import build_bar_bundle, write_filter_contract
+
+    operators = None if args.operator == "all" else (args.operator,)
+    bundle = build_bar_bundle(operators, include_rf_spectrum=not args.skip_rf_spectrum)
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    npz_path, json_path = write_filter_contract(output_dir, bundle)
+    print(f"wrote {npz_path}")
+    print(f"wrote {json_path}")
+    for item in bundle.operators:
+        print(
+            f"  {item.operator_id}: n={item.n}  M={item.n_features}  "
+            f"eigenvalues={item.eigenvalues.size}  "
+            f"rf_spectrum={item.rf_spectrum.size}"
+        )
+    return 0
+
+
 def _info(args: argparse.Namespace) -> int:
     import kerop
 
@@ -273,6 +298,28 @@ def main(argv: list[str] | None = None) -> int:
 
     info = subparsers.add_parser("info", help="print the version and citation")
     info.set_defaults(handler=_info)
+
+    export = subparsers.add_parser(
+        "export-filter-contract",
+        help="write the forward-spectrum artifact for SpecInv (docs/FILTER_CONTRACT.md)",
+    )
+    export.add_argument(
+        "--output-dir",
+        default="results/filter_contract",
+        help="directory for filter_contract_v1.{npz,json}",
+    )
+    export.add_argument(
+        "--operator",
+        choices=("all", "spectral", "dirichlet1d"),
+        default="all",
+        help="which bar operator to export (default: both; dirichlet1d is the 1D map, not FEM)",
+    )
+    export.add_argument(
+        "--skip-rf-spectrum",
+        action="store_true",
+        help="write population eigenvalues only (faster; omits hat Sigma_M)",
+    )
+    export.set_defaults(handler=_export_filter_contract)
 
     args = parser.parse_args(argv)
     try:

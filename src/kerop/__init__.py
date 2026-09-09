@@ -42,11 +42,13 @@ Module map
     solution-operator datasets.
 :mod:`kerop.metrics`
     Excess risk and power-law rate estimation.
+:mod:`kerop.filter_contract`
+    Versioned npz/JSON export of the forward spectrum for SpecInv.
 """
 
 from __future__ import annotations
 
-from kerop import data, estimators, features, filters, kernels, metrics, theory
+from kerop import data, estimators, features, filter_contract, filters, kernels, metrics, theory
 from kerop.estimators import ExactOperatorFilter, VectorValuedRFRegressor
 from kerop.features import (
     MercerFeatures,
@@ -54,6 +56,12 @@ from kerop.features import (
     RandomFeatureMap,
     ScalarNTKFeatures,
     SeparableRFF,
+)
+from kerop.filter_contract import (
+    FilterContractBundle,
+    OperatorSpectrum,
+    build_bar_bundle,
+    write_filter_contract,
 )
 from kerop.filters import (
     FILTER_REGISTRY,
@@ -97,6 +105,7 @@ __all__ = [  # noqa: RUF022
     "data",
     "estimators",
     "features",
+    "filter_contract",
     "filters",
     "kernels",
     "metrics",
@@ -134,4 +143,9 @@ __all__ = [  # noqa: RUF022
     "excess_risk",
     "relative_error",
     "fit_power_law",
+    # filter contract (SpecInv handshake)
+    "FilterContractBundle",
+    "OperatorSpectrum",
+    "build_bar_bundle",
+    "write_filter_contract",
 ]
