@@ -96,13 +96,23 @@ def test_artifact_is_loadable_with_only_numpy_and_json(tmp_path: Path) -> None:
     ids = {record["operator_id"] for record in meta["operators"]}
     assert ids == {"kerop.spectral", "kerop.poisson"}
     for record in meta["operators"]:
-        for required in ("seed", "n", "n_features", "feature_count", "arrays", "reproduce"):
+        for required in (
+            "seed",
+            "n",
+            "n_features",
+            "feature_count",
+            "coefficient_dim",
+            "arrays",
+            "reproduce",
+        ):
             assert required in record
         assert record["n_features"] == record["feature_count"]
         evals = arrays[record["arrays"]["eigenvalues"]]
         rf = arrays[record["arrays"]["rf_spectrum"]]
         assert evals.ndim == 1 and evals.size > 0
-        assert rf.ndim == 1 and rf.size == record["n_features"]
+        # hat Sigma_M is pM x pM, so the RF spectrum has length p*M, not M.
+        assert rf.ndim == 1 and rf.size == record["coefficient_dim"]
+        assert record["coefficient_dim"] == record["n_summands"] * record["n_features"]
         assert "cli" in record["reproduce"]
         assert record["reproduce"]["seed"] == record["seed"]
 

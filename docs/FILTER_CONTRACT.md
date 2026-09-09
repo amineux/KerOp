@@ -69,9 +69,11 @@ Each `operators[]` entry:
 | `operator_id` | Stable id: `kerop.spectral` or `kerop.poisson` |
 | `seed` | Integer seed used for the RF draw (`20260301` on the bar) |
 | `n` | Training sample size used for `rf_spectrum` |
-| `n_features` / `feature_count` | Random-feature count `M` (same value twice) |
+| `n_features` / `feature_count` | Random-feature count \(M\) (same value twice) |
+| `n_summands` | The factor \(p\) in the feature expansion; coefficient space is \(pM\) |
+| `coefficient_dim` | Length of `rf_spectrum`, equal to \(pM\) |
 | `arrays.eigenvalues` | Key in the `.npz` for the population / closed-form spectrum |
-| `arrays.rf_spectrum` | Key in the `.npz` for eigenvalues of \(\widehat\Sigma_M = Z^\top Z/n\) |
+| `arrays.rf_spectrum` | Key in the `.npz` for eigenvalues of \(\widehat\Sigma_M = Z^\top Z/n\) (length \(pM\)) |
 | `ordering` | Always `"descending"` |
 | `spectrum_units` | `"absolute"` (not rescaled to \([0,1]\)) |
 | `reproduce` | CLI, seed, train-size grid, \(\lambda\) grid, feature multipliers |
@@ -83,8 +85,8 @@ synthetic kernel integral operator (`r=0.5`, `b=0.5`, 512 modes, \(d_v=6\)).
 map on 12 collocation points.
 
 `n` and `M` on the artifact are the smallest bar grid point
-(\(n=150\), \(M \approx \sqrt{n}\,p\)). The full sweep that produced the
-medians is in `reproduce`.
+(\(n=150\), \(M \approx \sqrt{n}\,p\)). The RF spectrum has length \(pM\),
+not \(M\). The full sweep that produced the medians is in `reproduce`.
 
 ## Compatibility
 

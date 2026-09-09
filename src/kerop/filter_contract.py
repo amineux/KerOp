@@ -28,7 +28,6 @@ from typing import Any
 import numpy as np
 from numpy.typing import NDArray
 
-from kerop import __version__
 from kerop.data.pde import PoissonDataset
 from kerop.data.spectral import SpectralOperatorModel
 from kerop.features import OperatorNTKFeatures
@@ -148,7 +147,7 @@ class OperatorSpectrum:
         Population / closed-form forward spectrum, descending.
     rf_spectrum:
         Eigenvalues of the empirical RF covariance :math:`\\widehat\\Sigma_M`
-        at ``(n, n_features, seed)``, descending.
+        at ``(n, n_features, seed)``, descending.  Length ``p * M``.
     metadata:
         Extra fields written into the JSON sidecar (geometry, bar settings).
     """
@@ -366,6 +365,8 @@ def write_filter_contract(
     """
     if bundle is None:
         bundle = build_bar_bundle()
+    from kerop import __version__
+
     path = Path(path)
     if path.exists() and path.is_dir():
         stem = path / f"filter_contract_v{bundle.version}"
@@ -384,13 +385,22 @@ def write_filter_contract(
         rf_key = _array_key(item.operator_id, "rf_spectrum")
         arrays[evals_key] = np.asarray(item.eigenvalues, dtype=np.float64)
         arrays[rf_key] = np.asarray(item.rf_spectrum, dtype=np.float64)
+        n_summands = int(item.metadata.get("n_summands", 1))
+        coefficient_dim = (
+            int(item.rf_spectrum.size)
+            if item.rf_spectrum.size
+            else n_summands * int(item.n_features)
+        )
         operators_json.append(
             {
+                **item.metadata,
                 "operator_id": item.operator_id,
                 "seed": int(item.seed),
                 "n": int(item.n),
                 "n_features": int(item.n_features),
                 "feature_count": int(item.n_features),
+                "n_summands": n_summands,
+                "coefficient_dim": coefficient_dim,
                 "arrays": {
                     "eigenvalues": evals_key,
                     "rf_spectrum": rf_key,
@@ -399,7 +409,6 @@ def write_filter_contract(
                 "rf_spectrum_shape": list(item.rf_spectrum.shape),
                 "ordering": "descending",
                 "spectrum_units": "absolute",
-                **item.metadata,
             }
         )
 
@@ -472,6 +481,7 @@ def load_filter_contract(path: Path | str) -> FilterContractBundle:
                             "n",
                             "n_features",
                             "feature_count",
+                            "coefficient_dim",
                             "arrays",
                             "eigenvalues_shape",
                             "rf_spectrum_shape",
