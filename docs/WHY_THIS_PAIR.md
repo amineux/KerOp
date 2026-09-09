@@ -33,6 +33,11 @@ That is a coherent **portfolio**: one forward SciML library, one inverse SciML l
 ## Simulation folders
 
 - `KerOp/results/` — wall-time frontiers, rate / feature-threshold outputs
+- `KerOp/results/filter_contract/` — forward spectrum (`filter_contract_v1.{npz,json}`)
 - `SpecInv/results/` — `summary.json` PASS/FAIL, convergence / zero-shot / filters
+
+KerOp writes its forward spectrum as `results/filter_contract/filter_contract_v1.{npz,json}`.
+The layout is in [FILTER_CONTRACT.md](FILTER_CONTRACT.md). SpecInv can load those files
+with NumPy and `json`; it does not import KerOp.
 
 Cite the **papers first**, then this software as independent verification.
