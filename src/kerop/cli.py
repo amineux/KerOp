@@ -310,9 +310,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     export.add_argument(
         "--operator",
-        choices=("all", "spectral", "poisson"),
+        choices=("all", "spectral", "dirichlet1d"),
         default="all",
-        help="which bar operator to export (default: both)",
+        help="which bar operator to export (default: both; dirichlet1d is the 1D map, not FEM)",
     )
     export.add_argument(
         "--skip-rf-spectrum",

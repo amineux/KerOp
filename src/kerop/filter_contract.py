@@ -37,6 +37,13 @@ Array = NDArray[np.float64]
 CONTRACT_VERSION = 1
 SCHEMA_ID = "kerop.filter_contract/v1"
 
+#: Stable operator ids.  Slugs are ``kerop.<name>`` with ``name`` matching
+#: ``[a-z][a-z0-9_]*``.  Ids must name an operator that this package actually
+#: ships.  ``kerop.poisson`` is reserved and unused: it would read as the
+#: deferred FEM/Poisson attachment, which is not in this export.
+OPERATOR_SPECTRAL = "kerop.spectral"
+OPERATOR_DIRICHLET1D = "kerop.dirichlet1d"
+
 #: Seed used by ``scripts/run_walltime_benchmark.py`` and the committed
 #: ``results/walltime_*.json`` records.
 BAR_SEED = 20260301
@@ -64,11 +71,15 @@ RECORDED_BAR: dict[str, Any] = {
         "min_speedup_at_matched_risk": 24.668054198508425,
         "max_speedup_at_matched_risk": 126.04174549573541,
     },
-    "poisson": {
+    "dirichlet1d": {
         "results_file": "results/walltime_poisson.json",
         "median_speedup_at_matched_risk": 3.55604718390518,
         "min_speedup_at_matched_risk": 1.594794749678986,
         "max_speedup_at_matched_risk": 44.17186286847536,
+        "note": (
+            "The experiment script still uses --task poisson; that is the 1D "
+            "Dirichlet map, not a FEM attachment."
+        ),
     },
 }
 
@@ -87,18 +98,30 @@ BAR_REPRODUCE: dict[str, Any] = {
         "r": 0.5,
         "b": 0.5,
     },
-    "poisson": {
+    "dirichlet1d": {
         "task_kwargs": {"n_points": 12},
         "lambda_grid": [0.01, 0.0001, 1e-05, 1e-06, 1e-07],
         "output_dim": 12,
         "n_summands": 9,
         "noise_std": 0.02,
+        "walltime_task": "poisson",
     },
+}
+
+#: CLI / builder aliases → canonical operator_id.  ``poisson`` is not listed.
+_OPERATOR_ALIASES: dict[str, str] = {
+    "spectral": OPERATOR_SPECTRAL,
+    OPERATOR_SPECTRAL: OPERATOR_SPECTRAL,
+    "dirichlet1d": OPERATOR_DIRICHLET1D,
+    OPERATOR_DIRICHLET1D: OPERATOR_DIRICHLET1D,
+    "walltime_poisson1d": OPERATOR_DIRICHLET1D,
 }
 
 __all__ = [
     "BAR_SEED",
     "CONTRACT_VERSION",
+    "OPERATOR_DIRICHLET1D",
+    "OPERATOR_SPECTRAL",
     "SCHEMA_ID",
     "FilterContractBundle",
     "OperatorSpectrum",
@@ -106,6 +129,7 @@ __all__ = [
     "build_bar_bundle",
     "build_operator_spectrum",
     "load_filter_contract",
+    "resolve_operator_id",
     "write_filter_contract",
 ]
 
@@ -180,7 +204,25 @@ class FilterContractBundle:
 
 def bar_operator_ids() -> tuple[str, ...]:
     """Identifiers of the two operators that constitute the committed bar."""
-    return ("kerop.spectral", "kerop.poisson")
+    return (OPERATOR_SPECTRAL, OPERATOR_DIRICHLET1D)
+
+
+def resolve_operator_id(operator: str) -> str:
+    """Map a CLI / builder name onto a canonical ``kerop.<slug>`` id."""
+    key = operator.strip().lower()
+    if key in {"poisson", "kerop.poisson"}:
+        raise KeyError(
+            f"{operator!r} is not a filter-contract id: it would read as the "
+            "deferred FEM/Poisson attachment. Use 'dirichlet1d' "
+            f"({OPERATOR_DIRICHLET1D}) for the existing 1D Dirichlet map."
+        )
+    try:
+        return _OPERATOR_ALIASES[key]
+    except KeyError:
+        raise KeyError(
+            f"unknown operator {operator!r}; expected one of "
+            f"{sorted(_OPERATOR_ALIASES)} (canonical ids: {list(bar_operator_ids())})"
+        ) from None
 
 
 def build_operator_spectrum(
@@ -191,30 +233,25 @@ def build_operator_spectrum(
     feature_multiplier: float = BAR_FEATURE_MULTIPLIER,
     include_rf_spectrum: bool = True,
 ) -> OperatorSpectrum:
-    """Build the forward spectrum for ``spectral`` or ``poisson``.
+    """Build the forward spectrum for ``spectral`` or ``dirichlet1d``.
 
     Construction and RNG streams match :mod:`kerop.experiments` so that
     ``(seed, n, M)`` reproduces the random-feature draw used by the wall-time
     bar.  The population eigenvalues do not depend on the training sample.
     """
-    name = operator.lower().removeprefix("kerop.")
-    if name == "spectral":
+    operator_id = resolve_operator_id(operator)
+    if operator_id == OPERATOR_SPECTRAL:
         return _spectral_spectrum(
             n=n,
             seed=seed,
             feature_multiplier=feature_multiplier,
             include_rf_spectrum=include_rf_spectrum,
         )
-    if name == "poisson":
-        return _poisson_spectrum(
-            n=n,
-            seed=seed,
-            feature_multiplier=feature_multiplier,
-            include_rf_spectrum=include_rf_spectrum,
-        )
-    raise KeyError(
-        f"unknown operator {operator!r}; expected 'spectral' or 'poisson' "
-        f"(or the ids {list(bar_operator_ids())})"
+    return _dirichlet1d_spectrum(
+        n=n,
+        seed=seed,
+        feature_multiplier=feature_multiplier,
+        include_rf_spectrum=include_rf_spectrum,
     )
 
 
@@ -237,7 +274,7 @@ def _spectral_spectrum(
     else:
         rf = np.zeros(0, dtype=float)
     return OperatorSpectrum(
-        operator_id="kerop.spectral",
+        operator_id=OPERATOR_SPECTRAL,
         seed=seed,
         n=n,
         n_features=n_features,
@@ -272,10 +309,10 @@ def _spectral_spectrum(
     )
 
 
-def _poisson_spectrum(
+def _dirichlet1d_spectrum(
     *, n: int, seed: int, feature_multiplier: float, include_rf_spectrum: bool
 ) -> OperatorSpectrum:
-    spec = BAR_REPRODUCE["poisson"]
+    spec = BAR_REPRODUCE["dirichlet1d"]
     n_points = int(spec["task_kwargs"]["n_points"])
     dataset = PoissonDataset(n_points=n_points, noise_std=float(spec["noise_std"]))
     n_summands = dataset.n_summands
@@ -295,17 +332,19 @@ def _poisson_spectrum(
     else:
         rf = np.zeros(0, dtype=float)
     return OperatorSpectrum(
-        operator_id="kerop.poisson",
+        operator_id=OPERATOR_DIRICHLET1D,
         seed=seed,
         n=n,
         n_features=n_features,
         eigenvalues=_descending(eigenvalues),
         rf_spectrum=rf,
         metadata={
-            "kind": "pde_solution_operator",
+            "kind": "dirichlet1d_solution_operator",
+            "is_fem": False,
             "description": (
-                "Eigenvalues (k*pi)^{-2} of the 1D Dirichlet Poisson solution "
-                "operator used by the Poisson wall-time bar."
+                "Eigenvalues (k*pi)^{-2} of the existing 1D Dirichlet map "
+                "(-u''=f on [0,1]) used by the wall-time bar. Closed form in "
+                "the sine basis; not a FEM / Poisson-stiffness attachment."
             ),
             "n_points": n_points,
             "n_modes": dataset.n_modes,
@@ -315,7 +354,7 @@ def _poisson_spectrum(
             "noise_std": spec["noise_std"],
             "feature_multiplier": feature_multiplier,
             "reproduce": {
-                **BAR_REPRODUCE["poisson"],
+                **BAR_REPRODUCE["dirichlet1d"],
                 "seed": seed,
                 "n": n,
                 "n_features": n_features,
@@ -326,7 +365,7 @@ def _poisson_spectrum(
                 "feature_multipliers": BAR_REPRODUCE["feature_multipliers"],
                 "iteration_grid": BAR_REPRODUCE["iteration_grid"],
             },
-            "recorded_bar": RECORDED_BAR["poisson"],
+            "recorded_bar": RECORDED_BAR["dirichlet1d"],
         },
     )
 
@@ -339,7 +378,7 @@ def build_bar_bundle(
     include_rf_spectrum: bool = True,
 ) -> FilterContractBundle:
     """Build the contract for the operators that make up the committed bar."""
-    names = operators if operators is not None else ("spectral", "poisson")
+    names = operators if operators is not None else ("spectral", "dirichlet1d")
     return FilterContractBundle(
         version=CONTRACT_VERSION,
         operators=tuple(
@@ -422,7 +461,8 @@ def write_filter_contract(
         "producer_version": __version__,
         "consumer": "specinv",
         "description": (
-            "Forward spectral quantities for the KerOp wall-time bar. "
+            "Canonical KerOp → SpecInv handshake. Schema id is "
+            "kerop.filter_contract/v1 only; do not mint a second schema. "
             "Load the sibling .npz for the arrays named under operators[].arrays. "
             "See docs/FILTER_CONTRACT.md."
         ),
@@ -431,8 +471,8 @@ def write_filter_contract(
             "spectral_median_speedup_at_matched_risk": (
                 RECORDED_BAR["spectral"]["median_speedup_at_matched_risk"]
             ),
-            "poisson_median_speedup_at_matched_risk": (
-                RECORDED_BAR["poisson"]["median_speedup_at_matched_risk"]
+            "dirichlet1d_median_speedup_at_matched_risk": (
+                RECORDED_BAR["dirichlet1d"]["median_speedup_at_matched_risk"]
             ),
         },
         "operators": operators_json,
